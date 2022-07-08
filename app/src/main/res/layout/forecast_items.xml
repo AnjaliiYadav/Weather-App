@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="model"
+            type="com.yadavanjalii.weather_app.data.model.Details" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <TextView
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/rv_min_temp"
+            android:id="@+id/date_time"
+            android:text="@{model.dt_txt}"
+            android:textColor="@color/white"/>
+
+      <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/date_time"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/rv_max_temp"
+            android:id="@+id/rv_min_temp"
+          temperature="@{model.main.temp_min}"
+            android:textColor="@color/white"/>
+
+           <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             app:layout_constraintStart_toEndOf="@id/rv_min_temp"
+             app:layout_constraintTop_toTopOf="parent"
+             app:layout_constraintEnd_toStartOf="@id/main"
+             android:id="@+id/rv_max_temp"
+               android:layout_marginEnd="5dp"
+             temperature="@{model.main.temp_max}"
+             android:textColor="@color/white"/>
+        <ImageView
+            android:id="@+id/rv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/rv_max_temp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/main"
+            imageUrl="@{model.weather.get(0).icon}"/>
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             app:layout_constraintStart_toEndOf="@id/rv_icon"
+             app:layout_constraintTop_toTopOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             android:id="@+id/main"
+             android:text="@{model.weather.get(0).main}"
+             android:textColor="@color/white"/>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="MainClass">
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="com.yadavanjalii.weather_app.data.response.ForecastResponse" />
+
+        <variable
+            name="current"
+            type="com.yadavanjalii.weather_app.data.response.WeatherResponse" />
+
+        <variable
+            name="click"
+            type="View.OnClickListener" />
+
+        <variable
+            name="itemclick"
+            type="com.yadavanjalii.common.core.RvClickListener" />
+
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/day_background"
+        tools:context=".ui.screens.MainActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/temp_view"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_margin="25dp"
+            android:background="@drawable/white_rectangle_outbox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/icon"
+                imageUrl="@{current.weather.get(0).icon}"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/temperature"
+                temperature="@{current.main.temp}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="65sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{current.weather.get(0).main}"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icon"
+                app:layout_constraintTop_toBottomOf="@id/temperature" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/details_view"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/white_rectangle_outbox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/temp_view">
+
+            <TextView
+                android:id="@+id/location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{current.name}"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/humidity"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                humidity="@{current.main.humidity}"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/min_temp"
+                app:layout_constraintStart_toEndOf="@id/location"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/min_temp"
+                minTemperature="@{current.main.temp_min}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/max_temp"
+                app:layout_constraintStart_toEndOf="@id/humidity"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/max_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                maxTemperature="@{current.main.temp_max}"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/min_temp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/recycler_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+           android:layout_margin="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_view">
+
+            <TextView
+                android:id="@+id/date_time"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Date-Time"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toStartOf="@id/rv_min_temp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/rv_min_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Min"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toStartOf="@id/rv_max_temp"
+                app:layout_constraintStart_toEndOf="@id/date_time"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/rv_max_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Max"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toStartOf="@id/rv_main"
+                app:layout_constraintStart_toEndOf="@id/rv_min_temp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/rv_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Condition"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/rv_max_temp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            click="@{itemclick}"
+            layout="@{@layout/forecast_items}"
+            list="@{model.list}"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="25dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recycler_header"
+            tools:listitem="@layout/forecast_items" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
